@@ -1,0 +1,32 @@
+[
+	{
+		"nombre": "Silvana",
+		"apellido": "Higa",
+		"nombreMascota": "Lolita",
+		"tipoMascota": "PERRO",
+		"edad": 3,
+		"telefono": "1165836999",
+		"mail": "silvana@gmail.com",
+		"id": 1
+	},
+	{
+		"nombre": "Guido",
+		"apellido": "Papa",
+		"nombreMascota": "Roberta",
+		"tipoMascota": "GATO",
+		"edad": 1,
+		"telefono": "11308554362",
+		"mail": "guido@gmail.com",
+		"id": 2
+	},
+	{
+		"nombre": "Carla",
+		"apellido": "Montenegro",
+		"nombreMascota": "Teniente",
+		"tipoMascota": "GATO",
+		"edad": "6",
+		"telefono": "1125475879",
+		"email": "carla@gmail.com",
+		"id": 3
+	}
+]

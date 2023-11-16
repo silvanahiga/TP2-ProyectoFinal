@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+  integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous" />
+<style>
+  h2 {
+    color: #58D68D;
+  }
+
+  .jumbotron {
+    background-color: #EAFAF1;
+  }
+</style>
+</head>
+
+<body>
+  <div class="container mt-4">
+    <div class="jumbotron w-50">
+      <h2>Ingreso Mascota</h2>
+      <br />
+      <form action="/mascotas" method="post">
+        <div class="from-group w-70">
+          <!-- "nombre": "Guido",
+          "apellido":"Papa",
+          "nombreMascota":"Roberta",
+          "tipoMascota": "GATO",
+          "edad": 1,
+          "telefono": "11308554362",
+          "mail": "guido@gmail.com" -->
+          <!-- { id: 1, nombre: "Maria", apellido: "Gomez", edad: 55, dni: 31172517, tipoCliente: "GOLD" }, -->
+          <label for="nombre">Nombre:</label>
+          <input type="text" name="nombre" id="nombre" class="form-control" />
+        </div>
+        <div class="from-group w-70">
+          <label for="apellido">Apellido:</label>
+          <input type="text" name="apellido" id="apellido" class="form-control" />
+        </div>
+        <div class="from-group w-70">
+          <label for="nombreMascota">Nombre Mascota:</label>
+          <input type="text" name="nombreMascota" id="nombreMascota" class="form-control" />
+        </div>
+        <select name="tipoMascota">
+          <option value="PERRO" selected>PERRO</option>
+          <option value="GATO" >GATO</option>
+          <option value="AVE">AVE</option>
+          <option value="ROEDOR" >ROEDOR</option>
+          <option value="ANFIBIO">ANFIBIO</option>
+        </select>
+        <div class="from-group w-70">
+          <label for="edad">Edad Mascota:</label>
+          <input type="number" name="edad" id="edad" class="form-control" />
+        </div>
+        <div class="from-group w-70">
+          <label for="telefono">Telefono:</label>
+          <input type="text" name="telefono" id="telefono" class="form-control" />
+        </div>
+        <div class="from-group w-70">
+          <label for="email">Email:</label>
+          <input type="text" name="email" id="email" class="form-control" />
+        </div>
+        <button class="btn btn-success mt-4">Enviar</button>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
