@@ -28,6 +28,7 @@ class RouterLogin {
 
     this.router.get("/signin", (req, res, next) => {
       res.render("signin");
+    
     });
 
     this.router.post(
@@ -37,6 +38,7 @@ class RouterLogin {
         failureRedirect: "/signin",
         failureFlash: true,
       })
+     
     );
 
     this.router.get("/profile", isAuthenticated, (req, res, next) => {

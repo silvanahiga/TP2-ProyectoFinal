@@ -1,4 +1,3 @@
-//////////////////////////////////////////////
 import { ObjectId } from "mongodb";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
@@ -32,11 +31,9 @@ passport.use(
         const usuarioExistente = await Usuario.getUsuarioPorEmail(email);
 
         if (usuarioExistente) {
-          return done(
-            null,
-            false,
-            req.flash("signupMessage", "El email ingresado ya ha sido registrado.")
-          );
+          const mensajeError = "El email ingresado ya ha sido registrado.";
+          console.error(mensajeError);
+          return done(null, false, req.flash("signupMessage", mensajeError));
         } else {
           const hashedPassword = await bcrypt.hash(password, 10);
           const nuevoUsuario = {
@@ -47,6 +44,7 @@ passport.use(
           done(null, nuevoUsuario);
         }
       } catch (error) {
+        console.error("Error durante el signup:", error.message);
         done(error, null);
       }
     }
@@ -66,17 +64,22 @@ passport.use(
         const usuario = await Usuario.getUsuarioPorEmail(email);
 
         if (!usuario) {
-          return done(null, false, req.flash("signinMessage", "Usuario incorrecto/inexistente"));
+          const mensajeError = "Usuario incorrecto/inexistente";
+          console.error(mensajeError);
+          return done(null, false, req.flash("signinMessage", mensajeError));
         }
 
         const isValidPassword = await Usuario.compararPassword(email, password);
 
         if (!isValidPassword) {
-          return done(null, false, req.flash("signinMessage", "Password incorrecta"));
+          const mensajeError = "Password incorrecta";
+          console.error(mensajeError);
+          return done(null, false, req.flash("signinMessage", mensajeError));
         }
 
         return done(null, usuario);
       } catch (error) {
+        console.error("Error durante el signin:", error.message);
         done(error, null);
       }
     }
