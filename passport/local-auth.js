@@ -41,6 +41,7 @@ passport.use(
             password: hashedPassword,
           };
           await CnxMongoDB.db.collection("users").insertOne(nuevoUsuario);
+          console.log("Usuario registrado con éxito");
           done(null, nuevoUsuario);
         }
       } catch (error) {
@@ -65,8 +66,11 @@ passport.use(
 
         if (!usuario) {
           const mensajeError = "Usuario incorrecto/inexistente";
+          //// alternativa 1 para manejo de error:
           console.error(mensajeError);
           return done(null, false, req.flash("signinMessage", mensajeError));
+          //// alternativa 2 para majeo de error (dentro del done() primer parametro)
+          // return done(console.log(mensajeError), false, req.flash("signinMessage", mensajeError));
         }
 
         const isValidPassword = await Usuario.compararPassword(email, password);
@@ -76,7 +80,7 @@ passport.use(
           console.error(mensajeError);
           return done(null, false, req.flash("signinMessage", mensajeError));
         }
-
+        console.log("Usuario logueado con éxito");
         return done(null, usuario);
       } catch (error) {
         console.error("Error durante el signin:", error.message);
