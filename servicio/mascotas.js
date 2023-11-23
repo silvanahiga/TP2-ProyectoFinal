@@ -38,20 +38,6 @@ class ServicioMascotas {
     }
   };
 
-  // const producto = async () => {
-  //   let resultado
-  //   try {
-  //     console.log("---------------------------------esta es el producto")
-  //     resultado = await axios.get('https://fakestoreapi.com/products')
-  //     var productoKey = Math.floor(Math.random() * resultado.data.length);
-  //     console.log(resultado.data[productoKey]);
-  //   }
-  //   catch (error) {
-  //     console.log(error.message)
-  //   }
-
-  //   // console.log(resultado.data)
-  // }
   enviarMail = async (req, res) => {
     const array = await this.obtenerMascotas();
 
@@ -93,13 +79,13 @@ class ServicioMascotas {
   obtenerOfertas = async () => {
     let resultado;
     try {
-      console.log("---------------------------------esta es el producto");
       resultado = await axios.get("https://fakestoreapi.com/products")
       var item =await  resultado.data[Math.floor(Math.random()*resultado.data.length)];
       console.log(item)
       return (item)
     } catch (error) {
       console.log(error.message);
+     
     }
   };
 }

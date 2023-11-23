@@ -9,12 +9,10 @@ class RouterHistoria {
   }
 
   start() {
-    this.router.get(
-      "/:id?",
-      isAuthenticated,
-      this.controlador.obtenerHistorial
-    );
-    this.router.post("/", isAuthenticated, this.controlador.guardarHistorial);
+    // this.router.get("/:id?",isAuthenticated,this.controlador.obtenerHistorial);
+    this.router.get("/:id?",this.controlador.obtenerHistorial);
+    // this.router.post("/", isAuthenticated, this.controlador.guardarHistorial);
+    this.router.post("/",this.controlador.guardarHistorial);
 
     return this.router;
   }

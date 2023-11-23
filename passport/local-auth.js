@@ -84,15 +84,8 @@ passport.use(
 );
 
 export function isAuthenticated(req, res, next) {
-  try {
-    if (req.isAuthenticated()) {
-      console.log("usuario logueado correctamente")
-      return next();
-    }
-    res.redirect("/");
-  } catch (error) {
-    console.log("error usuario no existe")
-    console.log(error.message)
+  if (req.isAuthenticated()) {
+    return next();
   }
-
+  res.redirect("/");
 }

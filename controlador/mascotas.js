@@ -6,6 +6,7 @@ class ControladorMascotas {
   }
 
   obtenerMascotas = async (req, res) => {
+    
     const { id } = req.params;
     const mascotas = await this.servicio.obtenerMascotas(id);
     res.json(mascotas);
@@ -35,6 +36,7 @@ class ControladorMascotas {
     try {
       const mascota = req.body;
       const mascotaGuardado = await this.servicio.guardarMascota(mascota);
+      console.log("mascota guardada correctamente")
       res.json(mascotaGuardado);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -52,7 +54,6 @@ class ControladorMascotas {
 
   obtenerOfertas = async (req, res) => {
     const ofertas = await this.servicio.obtenerOfertas();
-    console.log(ofertas);
     res.json(ofertas);
   };
 
