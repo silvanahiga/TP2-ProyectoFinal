@@ -12,7 +12,6 @@ class CnxMongoDB {
             CnxMongoDB.client = new MongoClient(config.STRCNX)  //objeto de conexion
             await CnxMongoDB.client.connect()
             console.log("base de datos conectada")
-
             CnxMongoDB.db = CnxMongoDB.client.db(config.BASE)
             CnxMongoDB.connection = true
 
@@ -22,9 +21,10 @@ class CnxMongoDB {
 
     }
 
-    static desconectar = () => {
-
-
+    static desconectar = async () => {
+        if (!CnxMongoDB.connection) return
+        await CnxMongoDB.client.close()
+        CnxMongoDB.connection = true
     }
 }
 

@@ -1,29 +1,41 @@
-import config from "../config.js";
 import ModelFactory from "../model/DAO/modelFactory.js";
+import { validar, validarActualizacion } from "./validaciones/historial.js";
 
 class ServicioHistorial {
-  constructor() {
-    this.model = ModelFactory.get(config.MODO_PERSISTENCIA);
+  constructor(persistencia) {
+    this.model = ModelFactory.get(persistencia);
   }
 
   obtenerHistorial = async (id) => {
-    const mascotas = await this.model.obtenerHistorial(id);
-    return mascotas
+    const historial = await this.model.obtenerHistorial(id);
+    return historial;
   };
 
-  //   actualizarMascota = (id, mascota) => {
-  //     return this.model.actualizarMascota(id, mascota)
-  //   }
-
-  //   borrarMascota = (id) => {
-  //     return this.model.borrarMascota(id)
-  //   }
-
-  guardarHistorial = async (mascota) => {
-    const mascotaGuardado = await this.model.guardarHistorial(mascota);
-    return mascotaGuardado;
+  actualizarHistorial = (id, historial) => {
+    const res = validarActualizacion(historial);
+    if (res.result) {
+      return this.model.actualizarHistorial(id, historial);
+    } else {
+      console.log(res.error);
+      throw res.error;
+    }
   };
 
+  borrarHistorial = (id) => {
+    return this.model.borrarHistorial(id);
+  };
+
+  guardarHistorial = async (historial) => {
+    const res = validar(historial);
+    if (res.result) {
+      const historialGuardado = await this.model.guardarHistorial(historial);
+
+      return historialGuardado;
+    } else {
+      console.log(res.error);
+      throw res.error;
+    }
+  };
 }
 
 export default ServicioHistorial;

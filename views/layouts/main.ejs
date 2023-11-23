@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>TP2-ProyectoVeterinaria</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+    <style>
+      h2 {
+        color: #58d68d;
+      }
+
+      .jumbotron {
+        background-color: #eafaf1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVIGATION -->
+    <navbar>
+      <% if (!user) { %>
+      <a href="/signin">Signin</a>
+      <a href="/signup">Signup</a>
+      <% } else { %>
+      <a href="/logout">Logout</a>
+      <a href="/profile">Profile</a>
+      <a href="/mascotas/guardarmascota">Guardar mascota</a>
+      <% } %> <%if (signinMessage) {%>
+      <p><%= signinMessage %></p>
+      <% } %> <%if (signupMessage) {%>
+      <p><%= signupMessage %></p>
+      <% } %> <%- body %>
+    </navbar>
+  </body>
+</html>

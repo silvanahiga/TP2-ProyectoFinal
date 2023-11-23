@@ -1,6 +1,7 @@
 import ModelFile from "./mascotasFile.js";
 import ModelMongoDB from "./mascotasMongoDB.js";
 
+
 class ModelFactory {
   static get(tipo) {
     switch (tipo) {

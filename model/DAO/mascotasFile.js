@@ -24,8 +24,9 @@ class ModelFile {
 
   obtenerMascotas = async () => {
     try {
-      const clientes = await this.leerArchivo(this.nombreArchivo);
-      return clientes;
+      const 
+      mascotas = await this.leerArchivo(this.nombreArchivo);
+      return mascotas;
     } catch { }
   };
 
@@ -49,7 +50,7 @@ class ModelFile {
     if (index != -1) {
       const mascotaAnt = mascotas[index]
       const mascotaNuevo = { ...mascotaAnt, ...mascota }
-      mascotas.splice(index, 1, clienteNuevo)
+      mascotas.splice(index, 1, mascotaNuevo)
       this.escribirArchivo(this.nombreArchivo, mascotas) //para guardar un producto hay que sobreescribir el archivo
       return mascotaNuevo
 

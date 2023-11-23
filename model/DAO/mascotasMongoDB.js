@@ -1,97 +1,112 @@
 import { ObjectId } from "mongodb"
 import CnxMongoDB from "../DBMongo.js"
 
+
 class ModelMongoDB {
 
   obtenerHistorial = async (id) => {
+    if (!CnxMongoDB.connection) return id ? {} : [] //chequea si no esta conextado
     if (id) {
-      const mascota = await CnxMongoDB.db.collection('historial').findOne({ _id: new ObjectId(id) })
-      console.log("entro id")
-      return mascota
+      //devuelve un array con todas las visitas realizadas segun id de mascota
+      const historial = await CnxMongoDB.db.collection('historial').find({ mascotaId: new ObjectId(id) }).toArray()
+      return historial
     } else {
-      const mascotas = await CnxMongoDB.db.collection('historial').find({}).toArray()
-      console.log("entro array")
-      return mascotas
+      const historialCompleto = await CnxMongoDB.db.collection('historial').find({}).toArray()
+      return historialCompleto
     }
   }
 
-  guardarHistorial = async (mascota) => {
-    if (!CnxMongoDB.connection) return {}
-    await CnxMongoDB.db.collection("historial").insertOne(mascota)
-    return mascota
+  guardarHistorial = async (historial) => {
+    try {
+      if (!CnxMongoDB.connection) return {}
+      await CnxMongoDB.db.collection("historial").insertOne({ mascotaId: new ObjectId(historial.mascotaId), comentario: historial.comentario })
+      return historial
+    } catch (error) {
+      console.log(error.message)
+    }
+
   }
 
   obtenerMascotas = async (id) => {
-    if (!CnxMongoDB.connection) return id ? {} : [] //chequea si no esta conextado
-    console.log("entro")
-
-    // if (id) {
-    //   const mascota = await CnxMongoDB.db.collection('mascotas').findOne({_id: new ObjectId(id)})
-    //   console.log("entro id")
-    //   return mascota
-    // } else {
-    //   const mascotas = await CnxMongoDB.db.collection('mascotas').find({}).toArray()
-    //   console.log("entro array")
-    //   return mascotas
-    // }
-
+    if (!CnxMongoDB.connection) return id ? {} : [] //chequea si no esta conectado
     if (id) {
-      console.log(id)
-      // const mascota = await CnxMongoDB.db.collection('mascotas').findOne({ _id: new ObjectId(id) })
       const mascota = await CnxMongoDB.db.collection("mascotas").aggregate([{ $match: { _id: new ObjectId(id) } },
-      // const mascota = await CnxMongoDB.db.collection("mascotas").aggregate([
       {
         $lookup: {
           from: 'historial',
           localField: '_id',
           foreignField: 'mascotaId',
           as: 'visitas'
-          // from: 'historial',
-          // localField: '_id',
-          // foreignField: 'mascotaId',
-          // as: 'visitas'
         }
       }]).toArray(function (err, res) {
         if (err) throw err;
         console.log(JSON.stringify(res));
-        db.close();
       });
-
+      console.log(mascota)
       return mascota
 
     } else {
-      const mascotas = await CnxMongoDB.db.collection('mascotas').find({}).toArray()
-      console.log("array gral")
+      const mascotas = await CnxMongoDB.db.collection("mascotas").aggregate([
+        {
+          $lookup:
+          {
+            from: 'historial',
+            localField: '_id',
+            foreignField: 'mascotaId',
+            as: 'visitas'
+          }
+        }
+      ]).toArray(function (err, res) {
+        if (err) throw err;
+        console.log(JSON.stringify(res));
+      });
       return mascotas
     }
   }
 
   borrarMascota = async (id) => {
-    if (!CnxMongoDB.connection) return {}
+    try {
+      if (!CnxMongoDB.connection) return {}
 
-    const mascotaBorrado = await this.obtenerMascotas(id)
+      const mascotaBorrado = await this.obtenerMascotas(id)
+      await CnxMongoDB.db.collection("mascotas").deleteOne(
+        { _id: new ObjectId(id) }
+      )
+      return mascotaBorrado
+    } catch (error) {
+      console.log(error.message)
+    }
 
-    await CnxMongoDB.db.collection("mascotas").deleteOne(
-      { _id: new ObjectId(id) }
-    )
-    return mascotaBorrado
   }
 
   actualizarMascota = async (id, mascota) => {
-    if (!CnxMongoDB.connection) return {}
-    await CnxMongoDB.db.collection("mascotas").updateOne(
-      { _id: new ObjectId(id) },
-      { $set: mascota }
-    )
-    const mascotaActualizado = await this.obtenerMascotas(id)
-    return mascotaActualizado
+    try {
+      if (!CnxMongoDB.connection) return {}
+      await CnxMongoDB.db.collection("mascotas").updateOne(
+        { _id: new ObjectId(id) },
+        { $set: mascota }
+      )
+      const mascotaActualizado = await this.obtenerMascotas(id)
+      return mascotaActualizado
+    } catch (error) {
+      console.log(error.message)
+    }
+
   }
 
   guardarMascota = async (mascota) => {
-    if (!CnxMongoDB.connection) return {}
-    await CnxMongoDB.db.collection("mascotas").insertOne(mascota)
-    return mascota
+    try {
+      if (!CnxMongoDB.connection) return {}
+      await CnxMongoDB.db.collection("mascotas").insertOne(mascota)
+      return mascota
+
+    } catch (error) {
+      console.log(error.message)
+    }
+
   }
+
+
 
 }
 
