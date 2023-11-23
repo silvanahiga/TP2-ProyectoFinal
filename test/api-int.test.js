@@ -9,7 +9,7 @@ describe("test apirestful", () => {
 
     describe("GET", () => {
         it("deberia retornar un status 200 ", async () => {
-            const server = new Server(8081, "FILE")  //se guarda en file system
+            const server = new Server(8081, "MONGODB")  //se guarda en file system
             const app = await server.start()
 
             const request = supertest(app)
@@ -23,7 +23,7 @@ describe("test apirestful", () => {
 
     describe("POST", () => {
         it("deberia incorporar una mascota", async () => {
-            const server = new Server(8081, "FILE")  //genero un servidor  //se guarda en file system
+            const server = new Server(8081, "MONGODB")  //genero un servidor  //se guarda en file system
             const app = await server.start()
 
             const request = supertest(app)
